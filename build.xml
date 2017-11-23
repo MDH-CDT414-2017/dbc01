@@ -5,7 +5,6 @@
   <!-- set global properties for this build -->
   <property name="src" location="."/>
   <property name="build" location="build"/>
-  <property name="dist" location="dist"/>
 
   <target name="init">
     <!-- Create the time stamp -->
@@ -18,6 +17,18 @@
         description="compile the source">
     <!-- Compile the java code from ${src} into ${build} -->
     <javac srcdir="${src}" destdir="${build}"/>
+  </target>
+  
+  <target name="test" depends="compile">
+    <junit printsummary="on" haltonfailure="yes" fork="true">
+        <classpath>    
+          <pathelement location="${build}"/>
+        </classpath>
+        <formatter type="brief" usefile="false" />
+        <batchtest>
+            <fileset dir="${src}" includes="**/*Test.java" />
+        </batchtest>
+    </junit>
   </target>
 
   <target name="clean"
