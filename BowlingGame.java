@@ -5,6 +5,8 @@
  */
 package bowlinggame;
 
+import java.util.Arrays;
+
 /**
  *
  * @author dbc01
@@ -18,40 +20,81 @@ public class BowlingGame {
         // TODO code application logic here
     }
     
+    
+    public static int[] stringArrayToIntArray(String intString) {
+    String str = intString.replaceAll("[^-?0-9]+", " ");
+    String[] intStringSplit = str.trim().split(" "); //Split by spaces
+    int[] result = new int[intStringSplit.length]; //Used to store our ints
+
+    for (int i = 0; i < intStringSplit.length; i++) {
+        //parse and store each value into int[] to be returned
+        result[i] = Integer.parseInt(intStringSplit[i]); 
+    }
+    return result;
+    }
+    
+    public boolean checkStrike(int a, int b){
+        if (a==10&&b==0)
+            return true;
+        else
+        return false;        
+    }
+    
+    public boolean checkSpare(int a, int b)
+    {
+        if ((!(checkStrike(a,b)))&&((a+b)==10)) return true;
+        else return false;
+    }
+    
+    
+    @SuppressWarnings("empty-statement")
     public int getScore(String values){
         int score;
         score = 0;
+        int holder;
+        int ten=10;
+        boolean[] strike = {false, false, false, false, false,false,false,false,false,false,false,false}; 
+        boolean[] spare = {false, false, false, false, false,false,false,false,false,false,false,false}; 
+        int[] frameScore = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        String sampledata = "[1,5][3,6][7,2][3,6][4,4][5,3][3,3][4,5][8,1][2,8][7,2]";
         
-        if (values.length()<48)
-        {
-            score = -1;
-            return score;
+        //Check string consistency
+        if (values.length()<48){
+            return -1;
         }
-        //  dirty
-        int[] throwNumbers = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-        throwNumbers[0] = Character.getNumericValue(values.charAt(1));
-        throwNumbers[1] = Character.getNumericValue(values.charAt(3));
-        throwNumbers[2] = Character.getNumericValue(values.charAt(6));
-        throwNumbers[3] = Character.getNumericValue(values.charAt(8));
-        throwNumbers[4] = Character.getNumericValue(values.charAt(11));
-        throwNumbers[5] = Character.getNumericValue(values.charAt(13));
-        throwNumbers[6] = Character.getNumericValue(values.charAt(16));
-        throwNumbers[7] = Character.getNumericValue(values.charAt(18));
-        throwNumbers[8] = Character.getNumericValue(values.charAt(21));
-        throwNumbers[9] = Character.getNumericValue(values.charAt(23));
-        throwNumbers[10] = Character.getNumericValue(values.charAt(26));
-        throwNumbers[11] = Character.getNumericValue(values.charAt(28));
-        throwNumbers[12] = Character.getNumericValue(values.charAt(31));
-        throwNumbers[13] = Character.getNumericValue(values.charAt(33));
-        throwNumbers[14] = Character.getNumericValue(values.charAt(36));
-        throwNumbers[15] = Character.getNumericValue(values.charAt(38));
-        throwNumbers[16] = Character.getNumericValue(values.charAt(41));
-        throwNumbers[17] = Character.getNumericValue(values.charAt(43));
-        throwNumbers[18] = Character.getNumericValue(values.charAt(46));
-        throwNumbers[19] = Character.getNumericValue(values.charAt(48));
         
-        for (int i=0; i<=19; i++){
-            score=score+throwNumbers[i];
+        int[] num = stringArrayToIntArray(values);
+       
+        System.out.println(num.length);
+        
+        int j=9;
+        if (num.length>21)
+            j=10;
+        //get strikes and spares
+        
+        for (int i=0; i<=j; i++){
+        strike[i]=checkStrike(num[2*i],num[2*i+1]);
+        spare[i]=checkSpare(num[2*i],num[2*i+1]);
+        frameScore[i]=num[2*i]+num[2*i+1];
+        }
+        for (int i=0; i<=j; i++){
+        //Test for strikes 
+            if (strike[i]){ 
+                if (strike[i+1]){
+                        score=score+frameScore[i]+frameScore[i+1]+num[2*(i+2)];
+                }
+                else
+                    score=score+frameScore[i]+frameScore[i+1];
+            }
+            else if (spare[i]){ //test spares
+                score=score+frameScore[i]+num[2*(i+1)];
+                continue;
+            }
+            else if(strike[i]) continue;
+            else if (i!=10)
+            score=score+frameScore[i]; //no idea why i put it 
+            
+        
         }
         
         return score;
