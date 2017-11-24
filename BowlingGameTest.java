@@ -1,46 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package bowlinggame;
+import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-/**
- *
- * @author dbc01
- */
 public class BowlingGameTest {
-    
-    public BowlingGameTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
 
-    /**
-     * Test of main method, of class BowlingGame.
-     */
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+	}
+
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+	}
+
+	@Before
+	public void setUp() throws Exception {
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
+
     @Test
     public void testgetScoreExsists() {
         BowlingGame game = new BowlingGame();
@@ -141,4 +124,51 @@ public class BowlingGameTest {
         result = game.getScore(data);
         assertEquals(300,result);       
     }
+    
+    @Test
+    public void testgetScoreLongString() {
+        BowlingGame game = new BowlingGame();
+        String data = "[10,0][10,0][10,0][10,0][10,0][10,0][10,0][10,0][10,0][10,0][10,10]abc";
+        int result;
+        System.out.println("LongString");
+        result = game.getScore(data);
+        assertEquals(-1,result);       
+    }
+    @Test
+    public void testgetScoreInvalidString() {
+        BowlingGame game = new BowlingGame();
+        String data = "[10,0][10,0][10,0][10,0][10,0][10,0][10,0[10,0][10,0][10,0][10,10]";
+        int result;
+        System.out.println("LongString");
+        result = game.getScore(data);
+        assertEquals(-1,result);       
+    }
+    @Test
+    public void testgetScoreToobigNumber() {
+        BowlingGame game = new BowlingGame();
+        String data = "[10,0][10,0][10,0][10,0][10,0][10,0][10,0][10,0][10,0][10,0][10,11]";
+        int result;
+        System.out.println("TooBigNumber");
+        result = game.getScore(data);
+        assertEquals(-1,result);       
+    }
+    @Test
+    public void testgetScoreMoreInvalidString() {
+        BowlingGame game = new BowlingGame();
+        String data = "[[10,0][10,0][10,0][10,0][10,0][10,0][10,0][10,0][10,0][10,0]";
+        int result;
+        System.out.println("MoreInvalidString");
+        result = game.getScore(data);
+        assertEquals(-1,result);       
+    }
+    @Test
+    public void testgetScoreMixedStrikeSpare() {
+        BowlingGame game = new BowlingGame();
+        String data = "[3,7][10,0][2,5][5,4][10,0][10,0][9,1][6,4][3,7][10,0][10,4]";
+        int result;
+        System.out.println("MoreInvalidString");
+        result = game.getScore(data);
+        assertEquals(175,result);       
+    }
+
 }
