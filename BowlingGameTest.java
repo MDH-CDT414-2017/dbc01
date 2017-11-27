@@ -100,7 +100,7 @@ public class BowlingGameTest {
     @Test
     public void testgetScoreLastStrike() {
         BowlingGame game = new BowlingGame();
-        String data = "[1,5][3,6][7,2][3,6][4,4][5,3][3,3][4,5][8,1][10,0][7,2]";
+        String data = "[1,5][3,6][7,2][3,6][4,4][5,3][3,3][4,5][8,1][10,0][2,7]";
         int result;
         System.out.println("LastStrike");
         result = game.getScore(data);
@@ -177,6 +177,15 @@ public class BowlingGameTest {
         String data = "[3,7][10,0][2,5][0,2][10,0][10,0][9,1][6,4][3,7][5,5][10,2]";
         int result;
         System.out.println("LastSpareandTwoThrowsAfter");
+        result = game.getScore(data);
+        assertEquals(-1,result);       
+    }
+    @Test
+    public void testgetScoreRandom() {
+        BowlingGame game = new BowlingGame();
+        String data = "[3,7][5,6][2,5][0,2][10,0][10,0][9,1][6,4][3,7][5,5][10]";
+        int result;
+        System.out.println("Randomnumbers");
         result = game.getScore(data);
         assertEquals(-1,result);       
     }
