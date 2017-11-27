@@ -170,5 +170,15 @@ public class BowlingGameTest {
         result = game.getScore(data);
         assertEquals(175,result);       
     }
+    
+    @Test
+    public void testgetScoreLastSpareOneAfter() {
+        BowlingGame game = new BowlingGame();
+        String data = "[3,7][10,0][2,5][0,2][10,0][10,0][9,1][6,4][3,7][5,5][10,2]";
+        int result;
+        System.out.println("LastSpareandTwoThrowsAfter");
+        result = game.getScore(data);
+        assertEquals(-1,result);       
+    }
 
 }

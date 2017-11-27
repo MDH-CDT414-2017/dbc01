@@ -14,7 +14,7 @@ public class BowlingGame {
     String[] intStringSplit = str.trim().split(" "); //Split by spaces
     int[] result = new int[intStringSplit.length]; //Used to store our ints
     if (!(intString.matches(".*\\d+.*"))) { //return int array filled with -1 if there is no number in the provided string
-    		Arrays.fill(result, -1);
+    		//Arrays.fill(result, -1);
     		return result;
     }
     for (int i = 0; i < intStringSplit.length; i++) {
@@ -89,6 +89,10 @@ public class BowlingGame {
         spare[i]=checkSpare(num[2*i],num[2*i+1]);
         frameScore[i]=num[2*i]+num[2*i+1];
         }
+        
+      //If last spare, only one extra throw
+        if (spare[9]&&num.length>21)
+        		return -1;
         
         //Game score calculation logic
         for (int i=0; i<=lastStrike; i++){
