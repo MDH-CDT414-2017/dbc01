@@ -28,9 +28,6 @@ permissions and limitations under the License.
     <fileset dir="lib">
       <include name="*.jar"/>
     </fileset>
-    <fileset dir=".">
-      <include name="*.jar"/>
-    </fileset>
   </path>
 
   <target name="init" description="Make build directories">
