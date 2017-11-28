@@ -189,5 +189,23 @@ public class BowlingGameTest {
         result = game.getScore(data);
         assertEquals(-1,result);       
     }
+    @Test
+    public void testgetScoreAllZeroExtra() {
+        BowlingGame game = new BowlingGame();
+        String data = "[0,0][0,0][0,0][0,0][0,0][0,0][0,0][0,0][0,0][0,0][0]";
+        int result;
+        System.out.println("AllZero");
+        result = game.getScore(data);
+        assertEquals(-1,result);       
+    }
+    @Test
+    public void testgetScoreAllZero() {
+        BowlingGame game = new BowlingGame();
+        String data = "[0,0][0,0][0,0][0,0][0,0][0,0][0,0][0,0][0,0][0,0]";
+        int result;
+        System.out.println("AllZero");
+        result = game.getScore(data);
+        assertEquals(0,result);       
+    }
 
 }

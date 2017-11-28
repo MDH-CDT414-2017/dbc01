@@ -28,17 +28,17 @@ public class BowlingGame {
 
 	public boolean checkFormat(String checkThis) {
 		String noStrikeorSpare = "^\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]";
-		String lastStrike = "^\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]";
+		String frameLength = "^\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]";
 		String lastSpare = "^\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+,\\d+\\]\\[\\d+\\]";
 		boolean a = checkThis.matches(lastSpare);
-		boolean b = checkThis.matches(lastStrike);
+		boolean b = checkThis.matches(frameLength);
 		boolean c = checkThis.matches(noStrikeorSpare);
 		return (a|b|c);
 	}
 
 	public int getScore(String values){
 		int score = 0;
-		int lastStrike=9;
+		int frameLength=9;
 		boolean[] strike = {false, false, false, false, false, false, false, false, false, false, false, false}; 
 		boolean[] spare = {false, false, false, false, false, false, false, false, false, false, false, false}; 
 		int[] frameScore = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -61,20 +61,22 @@ public class BowlingGame {
 		 * CALCULATE GAME SCORE
 		 */
 		 //Indicator if there is a last strike
-		lastStrike = (num.length>21) ? 10 : 9;
+		frameLength = (num.length>21) ? 10 : 9;
 
 		//Check each frame if Strike or Spare
-		for (int i=0; i<=lastStrike; i++){
+		for (int i=0; i<=frameLength; i++){
 			strike[i]=checkStrike(num[2*i],num[2*i+1]);
 			spare[i]=checkSpare(num[2*i],num[2*i+1]);
 			frameScore[i]=num[2*i]+num[2*i+1];
-			if (lastStrike==9) if (frameScore[i]>10) return -1;
+			if (frameLength==9) if (frameScore[i]>10) return -1;
 		}
-		//If last spare, only one extra throw
-		if (spare[9]&&num.length>21)
+		//Is last strike or spare correct?
+		if (((!strike[9])||spare[9])&&num.length>21)
 			return -1; 
+		else if((!spare[9])&&num.length==21)
+			return -1;
 		//Game score calculation logic
-		for (int i=0; i<=lastStrike; i++){
+		for (int i=0; i<=frameLength; i++){
 			//Check for strikes 
 			if (strike[i]){ 
 				if (strike[i+1]){ //check if two strikes in a row
