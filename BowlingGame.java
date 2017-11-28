@@ -68,7 +68,8 @@ public class BowlingGame {
 			strike[i]=checkStrike(num[2*i],num[2*i+1]);
 			spare[i]=checkSpare(num[2*i],num[2*i+1]);
 			frameScore[i]=num[2*i]+num[2*i+1];
-			if (frameLength==9) if (frameScore[i]>10) return -1;
+			if (i<10 && frameScore[i]>10) return -1;
+			if (i==10 && frameScore[i]>20) return -1;
 		}
 		//Is last strike or spare correct?
 		if (((!strike[9])||spare[9])&&num.length>21)

@@ -201,11 +201,29 @@ public class BowlingGameTest {
     @Test
     public void testgetScoreAllZero() {
         BowlingGame game = new BowlingGame();
-        String data = "[0,0][0,0][0,0][0,0][0,0][0,0][0,0][0,0][0,0][0,0]";
+        String data = "[0,0][0,0][0,0][0,0][0,0][0,0][0,0][0,0][0,0][0,0][0,0]";
         int result;
         System.out.println("AllZero");
         result = game.getScore(data);
-        assertEquals(0,result);       
+        assertEquals(-1,result);       
+    }
+    @Test
+    public void testgetScoreLarge() {
+        BowlingGame game = new BowlingGame();
+        String data = "[0,0][0,0][0,0][5,6][0,0][0,0][0,0][0,0][0,0][10,0][0,0]";
+        int result;
+        System.out.println("AllZero");
+        result = game.getScore(data);
+        assertEquals(-1,result);       
+    }
+    @Test
+    public void testgetScoreLarge1() {
+        BowlingGame game = new BowlingGame();
+        String data = "[0,0][0,0][0,0][5,6][0,0][0,0][0,0][0,0][0,0][10,0][11,10]";
+        int result;
+        System.out.println("AllZero");
+        result = game.getScore(data);
+        assertEquals(-1,result);       
     }
 
 }
