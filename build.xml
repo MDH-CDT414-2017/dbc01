@@ -25,6 +25,9 @@ permissions and limitations under the License.
   <path id="classpath">
     <pathelement location="build/classes"/>
     <pathelement location="build/test/classes"/>
+	 <fileset dir="lib">
+	<include name="*.jar"/>
+     </fileset>
   </path>
 
   <target name="init" description="Make build directories">
